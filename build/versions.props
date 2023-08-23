@@ -13,6 +13,7 @@
     <HealthCheckAzureSearch>7.0.0</HealthCheckAzureSearch>
     <HealthCheckAzureServiceBus>7.2.0</HealthCheckAzureServiceBus>
     <HealthCheckAzureStorage>7.0.0</HealthCheckAzureStorage>
+    <HealthCheckClickHouse>7.0.0</HealthCheckClickHouse>
     <HealthCheckCloudFirestore>7.0.0</HealthCheckCloudFirestore>
     <HealthCheckConsul>7.0.0</HealthCheckConsul>
     <HealthCheckCosmosDb>7.0.0</HealthCheckCosmosDb>
