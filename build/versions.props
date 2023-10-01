@@ -57,9 +57,9 @@
     <HealthCheckSqlite>8.0.0</HealthCheckSqlite>
     <HealthCheckSqlServer>8.0.0</HealthCheckSqlServer>
     <HealthCheckSurrealDb>8.0.0</HealthCheckSurrealDb>
+    <HealthCheckSystem>8.0.0</HealthCheckSystem>
     <HealthChecksUIK8sOperator>8.0.0</HealthChecksUIK8sOperator>
     <HealthChecksUIPostgreSQLStorage>8.0.0</HealthChecksUIPostgreSQLStorage>
-    <HealthCheckSystem>8.0.0</HealthCheckSystem>
     <HealthCheckUI>8.0.0</HealthCheckUI>
     <HealthCheckUIClient>8.0.0</HealthCheckUIClient>
     <HealthCheckUICore>8.0.0</HealthCheckUICore>
