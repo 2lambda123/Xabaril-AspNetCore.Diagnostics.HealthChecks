@@ -132,6 +132,9 @@ sqlite:
 sqlserver:
   - src/HealthChecks.SqlServer/**/*
 
+surrealdb:
+  - src/HealthChecks.SurrealDb/**/*
+
 system:
   - src/HealthChecks.System/**/*
 
