@@ -13,8 +13,10 @@ public class MongoDbHealthCheck : IHealthCheck
     private readonly MongoClientSettings _mongoClientSettings;
     private readonly string? _specifiedDatabase;
     private readonly Dictionary<string, object> _baseCheckDetails = new Dictionary<string, object>{
-                    { "healthcheck.type", nameof(MongoDbHealthCheck) },
-                    { "db.system", "mongodb" }
+                    { "healthcheck.name", nameof(MongoDbHealthCheck) },
+                    { "healthcheck.task", "ready" },
+                    { "db.system", "mongodb" },
+                    { "event.name", "database.healthcheck"}
     };
 
     public MongoDbHealthCheck(string connectionString, string? databaseName = default)

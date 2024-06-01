@@ -10,8 +10,10 @@ public class OracleHealthCheck : IHealthCheck
 {
     private readonly OracleHealthCheckOptions _options;
     private readonly Dictionary<string, object> _baseCheckDetails = new Dictionary<string, object>{
-                    { "healthcheck.type", nameof(OracleHealthCheck) },
-                    { "db.system", "oracle" }
+                    { "healthcheck.name", nameof(OracleHealthCheck) },
+                    { "healthcheck.task", "ready" },
+                    { "db.system", "oracle" },
+                    { "event.name", "database.healthcheck"}
     };
 
     public OracleHealthCheck(OracleHealthCheckOptions options)

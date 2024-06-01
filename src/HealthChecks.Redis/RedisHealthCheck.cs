@@ -16,8 +16,10 @@ public class RedisHealthCheck : IHealthCheck
     private readonly IConnectionMultiplexer? _connectionMultiplexer;
     private readonly Func<IConnectionMultiplexer>? _connectionMultiplexerFactory;
     private readonly Dictionary<string, object> _baseCheckDetails = new Dictionary<string, object>{
-                    { "healthcheck.type", nameof(RedisHealthCheck) },
-                    { "db.system", "redis" }
+                    { "healthcheck.name", nameof(RedisHealthCheck) },
+                    { "healthcheck.task", "online" },
+                    { "db.system", "redis" },
+                    { "event.name", "database.healthcheck"}
     };
 
     public RedisHealthCheck(string redisConnectionString)
@@ -82,7 +84,7 @@ public class RedisHealthCheck : IHealthCheck
                 var server = connection.GetServer(endPoint);
 
                 checkDetails.Add("server.address", (endPoint as IPEndPoint).Address);
-                checkDetails.Add("server.po ", (endPoint as IPEndPoint).Port);
+                checkDetails.Add("server.port", (endPoint as IPEndPoint).Port);
 
                 if (server.ServerType != ServerType.Cluster)
                 {

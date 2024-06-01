@@ -12,8 +12,10 @@ public class ElasticsearchHealthCheck : IHealthCheck
 
     private readonly ElasticsearchOptions _options;
     private readonly Dictionary<string, object> _baseCheckDetails = new Dictionary<string, object>{
-                    { "healthcheck.type", nameof(ElasticsearchHealthCheck) },
-                    { "db.system", "elasticsearch" }
+                    { "healthcheck.name", nameof(ElasticsearchHealthCheck) },
+                    { "healthcheck.task", "online" },
+                    { "db.system", "elasticsearch" },
+                    { "event.name", "database.healthcheck"}
     };
 
     public ElasticsearchHealthCheck(ElasticsearchOptions options)
@@ -65,6 +67,7 @@ public class ElasticsearchHealthCheck : IHealthCheck
 
             if (_options.UseClusterHealthApi)
             {
+                checkDetails.Add("healthcheck.task", "ready");
                 var healthResponse = await lowLevelClient.Cluster.HealthAsync(ct: cancellationToken).ConfigureAwait(false);
 
                 if (healthResponse.ApiCall.HttpStatusCode != 200)
@@ -79,7 +82,7 @@ public class ElasticsearchHealthCheck : IHealthCheck
                     _ => new HealthCheckResult(context.Registration.FailureStatus, data: new ReadOnlyDictionary<string, object>(checkDetails))
                 };
             }
-
+            checkDetails.Add("healthcheck.task", "online");
             var pingResult = await lowLevelClient.PingAsync(ct: cancellationToken).ConfigureAwait(false);
             bool isSuccess = pingResult.ApiCall.HttpStatusCode == 200;
 

@@ -10,8 +10,10 @@ public class ArangoDbHealthCheck : IHealthCheck
 {
     private readonly ArangoDbOptions _options;
     private readonly Dictionary<string, object> _baseCheckDetails = new Dictionary<string, object>{
-                    { "healthcheck.type", nameof(ArangoDbHealthCheck) },
-                    { "db.system", "arango" }
+                    { "healthcheck.name", nameof(ArangoDbHealthCheck) },
+                    { "healthcheck.task", "ready" },
+                    { "db.system", "arango" },
+                    { "event.name", "database.healthcheck"}
     };
 
     public ArangoDbHealthCheck(ArangoDbOptions options)
@@ -29,9 +31,12 @@ public class ArangoDbHealthCheck : IHealthCheck
 
             using var adb = new ArangoDBClient(transport);
             var databases = await adb.Database.GetCurrentDatabaseInfoAsync(cancellationToken).ConfigureAwait(false);
-            return databases.Error
-                ? new HealthCheckResult(context.Registration.FailureStatus, $"HealthCheck failed with status code: {databases.Code}.", data: new ReadOnlyDictionary<string, object>(checkDetails))
-                : HealthCheckResult.Healthy(data: new ReadOnlyDictionary<string, object>(checkDetails));
+            if (databases.Error)
+            {
+                return new HealthCheckResult(context.Registration.FailureStatus, $"HealthCheck failed with status code: {databases.Code}.", data: new ReadOnlyDictionary<string, object>(checkDetails))
+            }
+            checkDetails.Add("db.namespace", databases.Result.Name);
+            return HealthCheckResult.Healthy(data: new ReadOnlyDictionary<string, object>(checkDetails));
         }
         catch (Exception ex)
         {

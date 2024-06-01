@@ -11,8 +11,10 @@ public class SqliteHealthCheck : IHealthCheck
 {
     private readonly SqliteHealthCheckOptions _options;
     private readonly Dictionary<string, object> _baseCheckDetails = new Dictionary<string, object>{
-                    { "healthcheck.type", nameof(SqliteHealthCheck) },
-                    { "db.system", "sqlite" }
+                    { "healthcheck.name", nameof(SqliteHealthCheck) },
+                    { "healthcheck.task", "ready" },
+                    { "db.system", "sqlite" },
+                    { "event.name", "database.healthcheck"}
     };
 
     public SqliteHealthCheck(SqliteHealthCheckOptions options)

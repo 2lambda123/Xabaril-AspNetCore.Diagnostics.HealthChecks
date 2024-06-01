@@ -13,8 +13,10 @@ public class DynamoDbHealthCheck : IHealthCheck
 {
     private readonly DynamoDBOptions _options;
     private readonly Dictionary<string, object> _baseCheckDetails = new Dictionary<string, object>{
-                    { "healthcheck.type", nameof(DynamoDbHealthCheck) },
-                    { "db.system", "dynamodb" }
+                    { "healthcheck.name", nameof(DynamoDbHealthCheck) },
+                    { "healthcheck.task", "ready" },
+                    { "db.system", "dynamodb" },
+                    { "event.name", "database.healthcheck"}
     };
 
     /// <summary>

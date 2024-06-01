@@ -10,8 +10,10 @@ public class DocumentDbHealthCheck : IHealthCheck
     private static readonly ConcurrentDictionary<string, DocumentClient> _connections = new();
     private readonly DocumentDbOptions _options;
     private readonly Dictionary<string, object> _baseCheckDetails = new Dictionary<string, object>{
-                    { "healthcheck.type", nameof(DocumentDbHealthCheck) },
-                    { "db.system", "documentdb" }
+                    { "healthcheck.name", nameof(DocumentDbHealthCheck) },
+                    { "healthcheck.task", "ready" },
+                    { "db.system", "documentdb" },
+                    { "event.name", "database.healthcheck"}
     };
 
     public DocumentDbHealthCheck(DocumentDbOptions documentDbOptions)

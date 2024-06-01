@@ -11,8 +11,10 @@ public class MySqlHealthCheck : IHealthCheck
 {
     private readonly MySqlHealthCheckOptions _options;
     private readonly Dictionary<string, object> _baseCheckDetails = new Dictionary<string, object>{
-                    { "healthcheck.type", nameof(MySqlHealthCheck) },
-                    { "db.system", "mysql" }
+                    { "healthcheck.name", nameof(MySqlHealthCheck) },
+                    { "healthcheck.task", "ready" },
+                    { "db.system", "mysql" },
+                    { "event.name", "database.healthcheck"}
     };
 
     public MySqlHealthCheck(MySqlHealthCheckOptions options)
