@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Net;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace HealthChecks.Gcp.CloudFirestore;
@@ -10,7 +11,10 @@ public class CloudFirestoreHealthCheck : IHealthCheck
                     { "healthcheck.name", nameof(CloudFirestoreHealthCheck) },
                     { "healthcheck.task", "ready" },
                     { "db.system", "gcpcloudfirestore" },
-                    { "event.name", "database.healthcheck"}
+                    { "event.name", "database.healthcheck"},
+                    { "client.address", Dns.GetHostName()},
+                    { "network.protocol.name", "http" },
+                    { "network.transport", "tcp" }
     };
 
     public CloudFirestoreHealthCheck(CloudFirestoreOptions cloudFirestoreOptions)

@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Net;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.Model;
 using Amazon.Runtime;
@@ -16,7 +17,10 @@ public class DynamoDbHealthCheck : IHealthCheck
                     { "healthcheck.name", nameof(DynamoDbHealthCheck) },
                     { "healthcheck.task", "ready" },
                     { "db.system", "dynamodb" },
-                    { "event.name", "database.healthcheck"}
+                    { "event.name", "database.healthcheck"},
+                    { "client.address", Dns.GetHostName()},
+                    { "network.protocol.name", "http" },
+                    { "network.transport", "tcp" }
     };
 
     /// <summary>

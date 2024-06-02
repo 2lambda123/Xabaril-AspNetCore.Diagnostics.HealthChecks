@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Net;
 using ArangoDBNetStandard;
 using ArangoDBNetStandard.AuthApi;
 using ArangoDBNetStandard.Transport.Http;
@@ -13,7 +14,10 @@ public class ArangoDbHealthCheck : IHealthCheck
                     { "healthcheck.name", nameof(ArangoDbHealthCheck) },
                     { "healthcheck.task", "ready" },
                     { "db.system", "arango" },
-                    { "event.name", "database.healthcheck"}
+                    { "event.name", "database.healthcheck"},
+                    { "client.address", Dns.GetHostName()},
+                    { "network.protocol.name", "http" },
+                    { "network.transport", "tcp" }
     };
 
     public ArangoDbHealthCheck(ArangoDbOptions options)
@@ -28,7 +32,6 @@ public class ArangoDbHealthCheck : IHealthCheck
         try
         {
             using var transport = await GetTransportAsync(_options).ConfigureAwait(false);
-
             using var adb = new ArangoDBClient(transport);
             var databases = await adb.Database.GetCurrentDatabaseInfoAsync(cancellationToken).ConfigureAwait(false);
             if (databases.Error)

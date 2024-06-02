@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Net;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
@@ -14,7 +15,10 @@ public class SqlServerHealthCheck : IHealthCheck
                     { "healthcheck.name", nameof(SqlServerHealthCheck) },
                     { "healthcheck.task", "ready" },
                     { "db.system", "mssql" },
-                    { "event.name", "database.healthcheck"}
+                    { "event.name", "database.healthcheck"},
+                    { "client.address", Dns.GetHostName()},
+                    { "network.protocol.name", "http" },
+                    { "network.transport", "tcp" }
     };
 
     public SqlServerHealthCheck(SqlServerHealthCheckOptions options)

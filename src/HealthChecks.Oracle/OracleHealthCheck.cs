@@ -1,3 +1,4 @@
+using System.Net;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Oracle.ManagedDataAccess.Client;
 
@@ -13,7 +14,10 @@ public class OracleHealthCheck : IHealthCheck
                     { "healthcheck.name", nameof(OracleHealthCheck) },
                     { "healthcheck.task", "ready" },
                     { "db.system", "oracle" },
-                    { "event.name", "database.healthcheck"}
+                    { "event.name", "database.healthcheck"},
+                    { "client.address", Dns.GetHostName()},
+                    { "network.protocol.name", "http" },
+                    { "network.transport", "tcp" }
     };
 
     public OracleHealthCheck(OracleHealthCheckOptions options)

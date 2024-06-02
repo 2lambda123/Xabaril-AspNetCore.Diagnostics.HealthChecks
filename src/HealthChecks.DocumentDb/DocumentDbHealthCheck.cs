@@ -1,5 +1,6 @@
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
+using System.Net;
 using Microsoft.Azure.Documents.Client;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
@@ -13,7 +14,10 @@ public class DocumentDbHealthCheck : IHealthCheck
                     { "healthcheck.name", nameof(DocumentDbHealthCheck) },
                     { "healthcheck.task", "ready" },
                     { "db.system", "documentdb" },
-                    { "event.name", "database.healthcheck"}
+                    { "event.name", "database.healthcheck"},
+                    { "client.address", Dns.GetHostName()},
+                    { "network.protocol.name", "http" },
+                    { "network.transport", "tcp" }
     };
 
     public DocumentDbHealthCheck(DocumentDbOptions documentDbOptions)

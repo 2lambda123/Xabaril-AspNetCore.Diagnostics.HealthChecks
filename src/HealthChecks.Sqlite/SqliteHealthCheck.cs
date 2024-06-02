@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Net;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
@@ -14,7 +15,10 @@ public class SqliteHealthCheck : IHealthCheck
                     { "healthcheck.name", nameof(SqliteHealthCheck) },
                     { "healthcheck.task", "ready" },
                     { "db.system", "sqlite" },
-                    { "event.name", "database.healthcheck"}
+                    { "event.name", "database.healthcheck"},
+                    { "client.address", Dns.GetHostName()},
+                    { "network.protocol.name", "http" },
+                    { "network.transport", "tcp" }
     };
 
     public SqliteHealthCheck(SqliteHealthCheckOptions options)

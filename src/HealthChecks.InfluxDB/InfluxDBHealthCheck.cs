@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Net;
 using InfluxDB.Client;
 using InfluxDB.Client.Api.Domain;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -15,7 +16,10 @@ public class InfluxDBHealthCheck : IHealthCheck, IDisposable
                     { "healthcheck.name", nameof(InfluxDBHealthCheck) },
                     { "healthcheck.task", "ready" },
                     { "db.system", "influxdb" },
-                    { "event.name", "database.healthcheck"}
+                    { "event.name", "database.healthcheck"},
+                    { "client.address", Dns.GetHostName()},
+                    { "network.protocol.name", "http" },
+                    { "network.transport", "tcp" }
     };
 
     public InfluxDBHealthCheck(Func<InfluxDBClientOptions.Builder, InfluxDBClientOptions> _options)

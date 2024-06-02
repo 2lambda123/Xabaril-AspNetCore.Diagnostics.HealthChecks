@@ -1,5 +1,6 @@
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
+using System.Net;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -16,7 +17,10 @@ public class MongoDbHealthCheck : IHealthCheck
                     { "healthcheck.name", nameof(MongoDbHealthCheck) },
                     { "healthcheck.task", "ready" },
                     { "db.system", "mongodb" },
-                    { "event.name", "database.healthcheck"}
+                    { "event.name", "database.healthcheck"},
+                    { "client.address", Dns.GetHostName()},
+                    { "network.protocol.name", "http" },
+                    { "network.transport", "tcp" }
     };
 
     public MongoDbHealthCheck(string connectionString, string? databaseName = default)

@@ -1,5 +1,6 @@
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
+using System.Net;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Conventions;
@@ -30,7 +31,10 @@ public class RavenDBHealthCheck : IHealthCheck
     private readonly Dictionary<string, object> _baseCheckDetails = new Dictionary<string, object>{
                     { "healthcheck.name", nameof(RavenDBHealthCheck) },
                     { "db.system", "ravendb" },
-                    { "event.name", "database.healthcheck"}
+                    { "event.name", "database.healthcheck"},
+                    { "client.address", Dns.GetHostName()},
+                    { "network.protocol.name", "http" },
+                    { "network.transport", "tcp" }
     };
 
     public RavenDBHealthCheck(RavenDBOptions options)

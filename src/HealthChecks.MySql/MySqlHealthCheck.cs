@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Net;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using MySqlConnector;
 
@@ -14,7 +15,10 @@ public class MySqlHealthCheck : IHealthCheck
                     { "healthcheck.name", nameof(MySqlHealthCheck) },
                     { "healthcheck.task", "ready" },
                     { "db.system", "mysql" },
-                    { "event.name", "database.healthcheck"}
+                    { "event.name", "database.healthcheck"},
+                    { "client.address", Dns.GetHostName()},
+                    { "network.protocol.name", "http" },
+                    { "network.transport", "tcp" }
     };
 
     public MySqlHealthCheck(MySqlHealthCheckOptions options)

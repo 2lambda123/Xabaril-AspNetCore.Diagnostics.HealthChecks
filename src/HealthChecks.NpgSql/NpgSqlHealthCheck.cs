@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Net;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Npgsql;
 
@@ -15,7 +16,10 @@ public class NpgSqlHealthCheck : IHealthCheck
                     { "healthcheck.name", nameof(NpgSqlHealthCheck) },
                     { "healthcheck.task", "ready" },
                     { "db.system", "npgsql" },
-                    { "event.name", "database.healthcheck"}
+                    { "event.name", "database.healthcheck"},
+                    { "client.address", Dns.GetHostName()},
+                    { "network.protocol.name", "http" },
+                    { "network.transport", "tcp" }
     };
 
     public NpgSqlHealthCheck(NpgSqlHealthCheckOptions options)

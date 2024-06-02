@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Net;
 using EventStore.ClientAPI;
 using EventStore.ClientAPI.SystemData;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -18,7 +19,10 @@ public class EventStoreHealthCheck : IHealthCheck
                     { "healthcheck.name", nameof(EventStoreHealthCheck) },
                     { "healthcheck.task", "ready" },
                     { "db.system", "azuretable" },
-                    { "event.name", "database.healthcheck"}
+                    { "event.name", "database.healthcheck"},
+                    { "client.address", Dns.GetHostName()},
+                    { "network.protocol.name", "http" },
+                    { "network.transport", "tcp" }
     };
 
     public EventStoreHealthCheck(string eventStoreConnection, string? login, string? password)

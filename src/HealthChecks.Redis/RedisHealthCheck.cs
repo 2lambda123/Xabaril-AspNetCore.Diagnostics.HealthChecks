@@ -19,7 +19,10 @@ public class RedisHealthCheck : IHealthCheck
                     { "healthcheck.name", nameof(RedisHealthCheck) },
                     { "healthcheck.task", "online" },
                     { "db.system", "redis" },
-                    { "event.name", "database.healthcheck"}
+                    { "event.name", "database.healthcheck"},
+                    { "client.address", Dns.GetHostName()},
+                    { "network.protocol.name", "http" },
+                    { "network.transport", "tcp" }
     };
 
     public RedisHealthCheck(string redisConnectionString)

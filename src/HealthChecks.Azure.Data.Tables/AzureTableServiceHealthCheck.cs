@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Net;
 using Azure.Data.Tables;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
@@ -15,7 +16,10 @@ public sealed class AzureTableServiceHealthCheck : IHealthCheck
                     { "healthcheck.name", nameof(AzureTableServiceHealthCheck) },
                     { "healthcheck.task", "ready" },
                     { "db.system", "azuretable" },
-                    { "event.name", "database.healthcheck"}
+                    { "event.name", "database.healthcheck"},
+                    { "client.address", Dns.GetHostName()},
+                    { "network.protocol.name", "http" },
+                    { "network.transport", "tcp" }
     };
 
     /// <summary>

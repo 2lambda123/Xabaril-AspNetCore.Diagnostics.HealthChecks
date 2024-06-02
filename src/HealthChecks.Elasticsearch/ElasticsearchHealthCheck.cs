@@ -1,5 +1,6 @@
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
+using System.Net;
 using Elasticsearch.Net;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Nest;
@@ -15,7 +16,10 @@ public class ElasticsearchHealthCheck : IHealthCheck
                     { "healthcheck.name", nameof(ElasticsearchHealthCheck) },
                     { "healthcheck.task", "online" },
                     { "db.system", "elasticsearch" },
-                    { "event.name", "database.healthcheck"}
+                    { "event.name", "database.healthcheck"},
+                    { "client.address", Dns.GetHostName()},
+                    { "network.protocol.name", "http" },
+                    { "network.transport", "tcp" }
     };
 
     public ElasticsearchHealthCheck(ElasticsearchOptions options)
